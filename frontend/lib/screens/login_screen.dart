@@ -15,26 +15,30 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
 
   Future<void> login() async {
-    final response = await http.post(
-      Uri.parse("http://127.0.0.1:8000/login"),
+    try{
+      final response = await http.post(
+        Uri.parse("http://127.0.0.1:8000/login"),
 
-      headers: {"Content-Type": "application/json"},
+        headers: {"Content-Type": "application/json"},
 
-      body: jsonEncode({
-        "username": usernameController.text,
-        "password": passwordController.text,
-      }),
-    );
-    final data = jsonDecode(response.body);
-
-    if (data["success"]) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: ((context) => const DashboardScreen())),
+        body: jsonEncode({
+          "username": usernameController.text,
+          "password": passwordController.text,
+        }),
       );
-    } else {
+      final data = jsonDecode(response.body);
+
+      if (data["success"]) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: ((context) => const DashboardScreen())),
+        );
+      }
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("invalid username or password")),
+        SnackBar(
+          content: Text("Connection error: $e"),
+        ),
       );
     }
   }
