@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/screens/dashboard_screen.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'dart:io';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,7 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
 
   Future<void> login() async {
-    try{
+    try {
       final response = await http.post(
         Uri.parse("http://127.0.0.1:8000/login"),
 
@@ -35,11 +36,9 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Connection error: $e"),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Connection error: $e")));
     }
   }
 
@@ -105,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            //Exit later
+                            exit(0);
                           },
                           child: const Text("Exit"),
                         ),
