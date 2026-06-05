@@ -9,7 +9,7 @@ void main() async {
   await windowManager.ensureInitialized();
 
   WindowOptions windowOptions = const WindowOptions(
-    size: Size(900, 600),
+    size: Size(420, 360),
     center: true,
     title: "TailorOS",
   );
@@ -34,8 +34,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "TailorOS",
       theme: ThemeData(
+        brightness: Brightness.dark,
+        useMaterial3: false,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue
+          seedColor: Colors.blue,
+          brightness: Brightness.dark
         ),
       ),
       home: const LoginScreen(),

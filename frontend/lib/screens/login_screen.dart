@@ -3,6 +3,7 @@ import 'package:frontend/screens/dashboard_screen.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:io';
+import 'package:window_manager/window_manager.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +15,10 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+
+  final usernameFocus = FocusNode();
+  final passwordFocus = FocusNode();
+  final loginFocus = FocusNode();
 
   Future<void> login() async {
     try {
@@ -30,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
       final data = jsonDecode(response.body);
 
       if (data["success"]) {
+        await windowManager.maximize();
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: ((context) => const DashboardScreen())),
@@ -45,11 +51,12 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF1E1E1E),
       body: Center(
         child: Card(
           elevation: 10,
           child: Padding(
-            padding: const EdgeInsets.all(30),
+            padding: const EdgeInsets.all(20),
             child: SizedBox(
               width: 250,
               child: Column(
@@ -66,10 +73,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(color: Colors.grey, fontSize: 16),
                   ),
 
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
 
                   TextField(
                     controller: usernameController,
+                    focusNode: usernameFocus,
+                    textInputAction: TextInputAction.next,
+                    onSubmitted: (_) {
+                      FocusScope.of(context).requestFocus(passwordFocus);
+                    },
                     decoration: const InputDecoration(
                       labelText: "Username",
                       border: OutlineInputBorder(),
@@ -79,6 +91,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   TextField(
                     controller: passwordController,
+                    focusNode: passwordFocus,
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (_) {
+                      FocusScope.of(context).requestFocus(loginFocus);
+                    },
                     obscureText: true,
                     decoration: const InputDecoration(
                       labelText: "Password",
@@ -92,6 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Expanded(
                         child: ElevatedButton(
+                          focusNode: loginFocus,
                           onPressed: () async {
                             await login();
                           },
