@@ -3,11 +3,11 @@ import bcrypt
 
 class DBManager:
 
-    def __init__(self):
-        self.db_path="tailor.db"
+    def __init__(self, db_path="tailor.db"):
+        self.db_path=db_path
         print("db path saved")
         self.conn= sqlite3.connect(self.db_path)
-        print("db coneected successfully")
+        print("db connected successfully")
         self.curr=self.conn.cursor()
 
         self.create_users_table()
