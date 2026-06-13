@@ -28,28 +28,70 @@ class DashboardScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Welcome",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Container(
+              height: 55,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+              ),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.shade100),
+                borderRadius: BorderRadius.circular(27.5),
+              ),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                    ),
+                    child: TextButton(
+                      onPressed: () {}, 
+                      child: const Text("Customers")
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                    ),
+                    child: TextButton(
+                    onPressed: () {}, 
+                    child: const Text("DashBoard")
+                    ),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8,
+                    ),
+                    child: TextButton(
+                      onPressed: () {}, 
+                      child: const Text("Orders")
+                    ),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8,
+                    ),
+                    child: TextButton(
+                      onPressed: () {}, 
+                      child: const Text("Measurments")
+                    ),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8,
+                    ),
+                    child: TextButton(
+                      onPressed: () {}, 
+                      child: const Text("Reports")
+                    ),
+                  ),
+                ],
+              ),
             ),
-
-            const SizedBox(height: 30),
-
-            ElevatedButton(onPressed: () {}, child: const Text("customers")),
-
-            const SizedBox(height: 10),
-
-            ElevatedButton(onPressed: () {}, child: const Text("orders")),
-
-            const SizedBox(height: 10),
-
-            ElevatedButton(onPressed: () {}, child: const Text("measurments")),
-
-            const SizedBox(height: 10),
-
-            ElevatedButton(onPressed: () {}, child: const Text("reports")),
           ],
         ),
       ),
