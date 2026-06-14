@@ -1,12 +1,17 @@
-import sqlite3
+import psycopg as pg
 import bcrypt
 
 class DBManager:
 
-    def __init__(self, db_path="tailor.db"):
-        self.db_path=db_path
-        print("db path saved")
-        self.conn= sqlite3.connect(self.db_path)
+    def __init__(self):
+        print("DBManager initialized")
+        self.conn= pg.connect(
+            host="localhost",
+            port=5432,
+            dbname="TailorOS",
+            user="postgres",
+            password="6369"
+        )
         print("db connected successfully")
         self.curr=self.conn.cursor()
 
@@ -19,13 +24,14 @@ class DBManager:
         self.curr.execute(
             """
             CREATE TABLE IF NOT EXISTS users(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT UNIQUE NOT NULL,
+                id SERIAL PRIMARY KEY ,
+                username VARCHAR(100) UNIQUE NOT NULL,
                 password_hash TEXT NOT NULL,
-                role TEXT NOT NULL
+                role VARCHAR(50) NOT NULL
             )
         """
         )
+        self.conn.commit()
     
     def seed_owner(self):
         username="ANIL"
@@ -33,7 +39,7 @@ class DBManager:
         self.curr.execute(
             '''
             SELECT * FROM users
-            WHERE username=?
+            WHERE username=%s
             ''',
             (username,)
         )
@@ -50,7 +56,7 @@ class DBManager:
             self.curr.execute(
                 '''
                 INSERT INTO users(username, password_hash, role)
-                VALUES(?,?,?)
+                VALUES(%s,%s,%s)
                 ''',
                 (username, hashed_password, role)
             )
@@ -63,7 +69,7 @@ class DBManager:
         self.curr.execute(
             '''
             SELECT * FROM users 
-            WHERE username=?
+            WHERE username=%s
             ''',
             (username,)
         )

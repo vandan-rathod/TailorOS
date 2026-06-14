@@ -142,7 +142,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
 
-          Expanded(child: Container()),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+
+                children: [
+                  Card(
+                    elevation: 4,
+
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.search),
+                          hintText: "Search customers, orders, measurements...",
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
