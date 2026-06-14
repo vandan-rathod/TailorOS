@@ -7,6 +7,72 @@ class DashboardScreen extends StatefulWidget {
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
+class ShortcutCard extends StatefulWidget {
+  final IconData icon;
+  final String title;
+  final VoidCallback onTap;
+
+  const ShortcutCard({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.onTap,
+  });
+
+  @override
+  State<ShortcutCard> createState() => _ShortcutCardState();
+}
+
+class _ShortcutCardState extends State<ShortcutCard> {
+  bool isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) {
+        setState(() => isHovered = true);
+      },
+      onExit: (_) {
+        setState(() => isHovered = false);
+      },
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          width: 180,
+          height: 180,
+          transform: Matrix4.identity()..scale(isHovered ? 1.05 : 1.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                blurRadius: isHovered ? 15 : 5,
+                spreadRadius: isHovered ? 12 : 0,
+                color: Colors.black12,
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(widget.icon, size: 60),
+              const SizedBox(height: 15),
+              Text(
+                widget.title,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class SideBarItem extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -165,6 +231,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                     ),
                   ),
+
+                const SizedBox(height: 40),
+
+                Wrap(
+                  spacing: 25,
+                  runSpacing: 25,
+                  alignment: WrapAlignment.center,
+                  children: [
+                    ShortcutCard(
+                      icon: Icons.people,
+                      title: "Customers",
+                      onTap: () {},
+                    ),
+
+                    ShortcutCard(
+                      icon: Icons.straighten,
+                      title: "Measurements",
+                      onTap: () {},
+                    ),
+
+                    ShortcutCard(
+                      icon: Icons.inventory,
+                      title: "Orders",
+                      onTap: () {},
+                    ),
+
+                    ShortcutCard(
+                      icon: Icons.payments,
+                      title: "Payments",
+                      onTap: () {},
+                    ),
+                  ],
+                ),
                 ],
               ),
             ),
