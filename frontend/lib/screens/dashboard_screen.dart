@@ -7,6 +7,8 @@ class DashboardScreen extends StatefulWidget {
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
+class ShortcutCard extends 
+
 class SideBarItem extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -143,16 +145,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
 
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
+            child: Center(
+              child: SizedBox(
+                width: 1200,
+                  child: Card(
+                    elevation: 8,
 
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-
-                children: [
-                  Card(
-                    elevation: 4,
-
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25)
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
 
@@ -165,10 +166,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
             ),
-          ),
         ],
       ),
     );
